@@ -1,0 +1,17 @@
+{
+    "contents" : "source(\"Load_data.R\")\nsource(\"Features.R\")\n\n# Include Features ---------------------------------------------------------\n\ndata = data.frame(Category = as.numeric(crimes$Category)-1,\n                  day = day, hour = hour, year = year, month = month,\n                  grid = grid, #2.71\n                  first_street = first_street, second_street = second_street, #2.73\n                  PdDistrict = as.numeric(crimes$PdDistrict)) #2.82\n\n\n# Model Training -----------------------------------------------------------\n\nrequire(xgboost)\ny=as.matrix(data[,1])\ntrainMatrix=as.matrix(data[,-1])\nnumberOfClasses=max(y)+1\nparam <- list(\"objective\" = \"multi:softprob\",\n              \"eval_metric\" = \"mlogloss\",\n              \"num_class\" = numberOfClasses)\ncv.nround = 5\ncv.nfold = 3\n\nbst.cv = xgb.cv(param=param, data = trainMatrix, label = y, \n                nfold = cv.nfold, nrounds = cv.nround)\n\nnround = 20\nbst = xgboost(param=param, data = trainMatrix, label = y, nrounds=nround)\n\n\n# Model interpretation ----------------------------------------------------\n\n# Importance matrix\nnames <- dimnames(trainMatrix)[[2]]\nimportance_matrix <- xgb.importance(names, model = bst)\n\n# Nice graph\nrequire(Ckmeans.1d.dp)\nxgb.plot.importance(importance_matrix)\n\n# Plot tree\nrequire(DiagrammeR)\nxgb.plot.tree(feature_names = names, model = bst, n_first_tree = 2)\n\n\n# Save workspace ----------------------------------------------------------\n\nsave.image(\"workspace.RData\")\n\n",
+    "created" : 1451581009284.000,
+    "dirty" : true,
+    "encoding" : "UTF-8",
+    "folds" : "",
+    "hash" : "1343652032",
+    "id" : "8973CCA7",
+    "lastKnownWriteTime" : 1451581164,
+    "path" : "~/Documents/SF_crimes/Main.R",
+    "project_path" : "Main.R",
+    "properties" : {
+    },
+    "relative_order" : 3,
+    "source_on_save" : false,
+    "type" : "r_source"
+}

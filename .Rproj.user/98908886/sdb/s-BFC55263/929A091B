@@ -1,0 +1,17 @@
+{
+    "contents" : "# Load csv ----------------------------------------------------------------\n\ncrimes0 = read.csv(\"train.csv\")\n\n# Remove space outliers ---------------------------------------------------\n\ncrimes = crimes0[-which(  crimes0$Y > 37.83 | \n                          crimes0$Y < 37.70 | \n                          crimes0$X > -122.37 | \n                          crimes0$X < -122.52),]\n\n\n\n",
+    "created" : 1451581008250.000,
+    "dirty" : false,
+    "encoding" : "UTF-8",
+    "folds" : "",
+    "hash" : "2452761059",
+    "id" : "929A091B",
+    "lastKnownWriteTime" : 1451581054,
+    "path" : "~/Documents/SF_crimes/Load_data.R",
+    "project_path" : "Load_data.R",
+    "properties" : {
+    },
+    "relative_order" : 2,
+    "source_on_save" : false,
+    "type" : "r_source"
+}

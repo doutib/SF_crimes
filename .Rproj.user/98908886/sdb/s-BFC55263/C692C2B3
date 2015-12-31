@@ -1,0 +1,17 @@
+{
+    "contents" : "\n# Load SF Map -------------------------------------------------------------\nrm(list=ls()) \nlibrary(ggplot2)\nlibrary(ggmap)\n\nsf_center = as.numeric(geocode(\"san francisco\"))\nsf_map = ggmap(get_googlemap(center = c(-122.43,37.75), zoom = 12), extent = \"normal\")  \nsf_map\n\n# Plot --------------------------------------------------------------------\n\"LARCENY/THEFT\"\n\"OTHER OFFENSES\"\n\"NON-CRIMINAL\"\n\"ASSAULT\"\n\"DRUG/NARCOTIC\"\ncrimes_sub1 = crimes[which(crimes$Category==\"LARCENY/THEFT\"),]\ncrimes_sub2 = crimes[which(crimes$Category==\"ASSAULT\"),]\np = sf_map + \n  geom_point(data = crimes_sub1, aes(x = X, y = Y), \n             size = 1, colour = \"blue\", alpha = 0.02) + \n  geom_point(data = crimes_sub2, aes(x = X, y = Y), \n             size = 1, colour = \"orange\", alpha = 0.01)\np\n\n",
+    "created" : 1451581010028.000,
+    "dirty" : false,
+    "encoding" : "UTF-8",
+    "folds" : "",
+    "hash" : "418721364",
+    "id" : "C692C2B3",
+    "lastKnownWriteTime" : 1451495195,
+    "path" : "~/Documents/SF_crimes/Plots.R",
+    "project_path" : "Plots.R",
+    "properties" : {
+    },
+    "relative_order" : 4,
+    "source_on_save" : false,
+    "type" : "r_source"
+}

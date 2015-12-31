@@ -1,0 +1,17 @@
+{
+    "contents" : "\n# Address processing ------------------------------------------------------\n\nlibrary(stringr)\nsplit_adress = \n  str_split(\n    str_replace_all(\n      crimes$Address,\"([0-9]+[:space:]|Block[:space:]of[:space:])\",\"\"),\n    \"[:space:]/[:space:]\")\n\n# Each crime is affected to two streets.\nfirst_street = as.numeric(as.factor(\n  rapply(split_adress, function(x) head(x, 1))))-1\nsecond_street = as.numeric(as.factor(\n  rapply(split_adress, function(x) tail(x, 1))))-1\n\n\n# Day of week -------------------------------------------------------------\n\nsplit_day = as.character(crimes$DayOfWeek)\nday = as.numeric(as.factor(split_day)) - 1\n\n\n# Grid --------------------------------------------------------------------\n\nY_scaled = round((crimes$Y-min(crimes$Y))/(max((crimes$Y-min(crimes$Y))))*100)\nX_scaled = round((crimes$X-min(crimes$X))/(max((crimes$X-min(crimes$X))))*100)\ngrid = Y_scaled*99+X_scaled-min(Y_scaled*99+X_scaled)\n\n\n# Year --------------------------------------------------------------------\n\nsplit_date = str_split(crimes$Dates,\"(-|[:space:])\")\n\nextract_year = as.numeric(rapply(split_date, function(x) head(x, 1)))\nyear = extract_year - min(extract_year)\n\n\n# Month -------------------------------------------------------------------\n\nextract_month = as.numeric(rapply(split_date, function(x) x[2]))\nmonth = extract_month - min(extract_month)\n\n\n# Hour --------------------------------------------------------------------\n\nhour = as.numeric(str_extract_all(\n  rapply(split_date, function(x) tail(x, 1)),\n  \"^([:digit:]+)\"))\n\n\n",
+    "created" : 1451581007118.000,
+    "dirty" : false,
+    "encoding" : "UTF-8",
+    "folds" : "",
+    "hash" : "276524950",
+    "id" : "BF1093EF",
+    "lastKnownWriteTime" : 1451581100,
+    "path" : "~/Documents/SF_crimes/Features.R",
+    "project_path" : "Features.R",
+    "properties" : {
+    },
+    "relative_order" : 1,
+    "source_on_save" : false,
+    "type" : "r_source"
+}
