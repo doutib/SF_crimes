@@ -3,11 +3,11 @@ source("Features.R")
 
 # Include Features ---------------------------------------------------------
 
-data = data.frame(Category = as.numeric(crimes$Category)-1,
+data = data.frame(Meta_Category = as.numeric(crimes$Meta_Category)-1,
                   day = day, hour = hour, year = year, month = month,
-                  grid = grid, #2.71
-                  first_street = first_street, second_street = second_street, #2.73
-                  PdDistrict = as.numeric(crimes$PdDistrict)) #2.82
+                  grid = grid,
+                  first_street = first_street, second_street = second_street, 
+                  PdDistrict = as.numeric(crimes$PdDistrict)) 
 
 
 # Model Training -----------------------------------------------------------
