@@ -1,10 +1,14 @@
 source("Load_data.R")
+
+# Training data set
+df = crimes
 source("Features.R")
 
 # Include Features ---------------------------------------------------------
 
 data = data.frame(Meta_Category = as.numeric(crimes$Meta_Category)-1,
-                  day = day, hour = hour, year = year, month = month,
+                  #day = day,
+                  hour = hour, year = year, month = month,
                   grid = grid,
                   first_street = first_street, second_street = second_street, 
                   PdDistrict = as.numeric(crimes$PdDistrict)) 
@@ -22,10 +26,10 @@ param <- list("objective" = "multi:softprob",
 cv.nround = 5
 cv.nfold = 3
 
-bst.cv = xgb.cv(param=param, data = trainMatrix, label = y, 
-                nfold = cv.nfold, nrounds = cv.nround)
+#bst.cv = xgb.cv(param=param, data = trainMatrix, label = y, 
+#                nfold = cv.nfold, nrounds = cv.nround)
 
-nround = 20
+nround = 50
 bst = xgboost(param=param, data = trainMatrix, label = y, nrounds=nround)
 
 
