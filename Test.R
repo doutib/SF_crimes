@@ -1,3 +1,4 @@
+source("Load_data.R")
 
 # Train model -------------------------------------------------------------
 
@@ -8,34 +9,32 @@ source("Features.R")
 
 # Include Features ---------------------------------------------------------
 
-data_test = data.frame(#day = day,
-                       hour = hour, year = year, month = month,
-                       grid = grid,
-                       first_street = first_street, second_street = second_street, 
-                       PdDistrict = as.numeric(crimes_test$PdDistrict)) 
+data_test = features
 
 # Model Testing  -----------------------------------------------------------
 
-require(xgboost)
-
+head(data_test)
 xgb.pred = predict(bst,as.matrix(data_test))
-pred = matrix(xgb.pred,ncol = n.cat,byrow = T)
+pred = matrix(xgb.pred,ncol = 39,byrow = T) # CATEGORY
 head(pred)
+
+dim(pred)
 
 # Scale --------------------------------------------------------------------
 
-pred_final = matrix(ncol=39,nrow=nrow(pred))
+pred_final = pred
 
-cursor=1
-for (i in 1:n.cat){
-  pred_final[,cursor:(cursor+length(prop_cat[[i]])-1)] = tcrossprod(pred[,i],prop_cat[[i]])
-  cursor = cursor+length(prop_cat[[i]])
-}
-
-pred_final = as.data.frame(cbind(crimes_test$Id,pred_final))
+pred_final = as.data.frame(cbind(as.integer(crimes_test$Id),pred_final))
 names(pred_final) = c("Id",rapply(names_cat, function(x) x))
+
+pred_final = ceiling(pred_final*100)/100
+pred_final$Id = as.integer(pred_final$Id)
+
+pred_final = pred_final[,c(1,1+order(names(pred_final)[2:40]))]
 head(pred_final)
+
 
 # Write csv ---------------------------------------------------------------
 
 write.csv(pred_final,file = "submission.csv",quote = F,row.names = F)
+

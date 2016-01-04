@@ -47,3 +47,12 @@ hour = as.numeric(str_extract_all(
   "^([:digit:]+)"))
 
 
+# Load features -----------------------------------------------------------
+
+features = data.frame(#day = day,
+  hour = hour, year = year, month = month,
+  grid = grid,
+  first_street = first_street, second_street = second_street, 
+  PdDistrict = as.numeric(df$PdDistrict)) 
+
+

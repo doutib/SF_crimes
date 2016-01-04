@@ -96,7 +96,6 @@ Meta_Category[str_detect(crimes$Category,concatenate_cat(Cat6)
 
 # Add meta-Category
 crimes$Meta_Category=as.factor(Meta_Category)
-sum(Meta_Category=="")
 
 # Proportion --------------------------------------------------------------
 
