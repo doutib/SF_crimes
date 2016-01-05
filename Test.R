@@ -1,4 +1,3 @@
-source("Load_data.R")
 
 # Train model -------------------------------------------------------------
 
@@ -13,26 +12,41 @@ data_test = features
 
 # Model Testing  -----------------------------------------------------------
 
-head(data_test)
+require(xgboost)
 xgb.pred = predict(bst,as.matrix(data_test))
-pred = matrix(xgb.pred,ncol = 39,byrow = T) # CATEGORY
+pred = matrix(xgb.pred,ncol = n.cat,byrow = T) # CATEGORY
+
+summary(xgb.pred)
 head(pred)
-
+head(data_test)
+head(pred)
 dim(pred)
-
+head(y)
+head(as.numeric(crimes$Category))
 # Scale --------------------------------------------------------------------
 
-pred_final = pred
+options(scipen=10)
 
-pred_final = as.data.frame(cbind(as.integer(crimes_test$Id),pred_final))
-names(pred_final) = c("Id",rapply(names_cat, function(x) x))
+# CATEGORY : original classes
+#pred_final = pred
+#pred_final = as.data.frame(cbind(as.integer(crimes_test$Id),pred_final))
+#names(pred_final) = c("Id",sort(rapply(names_cat, function(x) x)))
+#pred_final[,2:(ncat+1)] = floor(pred_final[,2:(ncat+1)]*1000000)/1000000
 
-pred_final = ceiling(pred_final*100)/100
-pred_final$Id = as.integer(pred_final$Id)
+# CATEGORY : meta classes
+pred_final = matrix(nrow=nrow(pred),ncol=39)
+counter = 1
+for (i in 1:length(prop_cat)){
+  pred_final[,counter:(counter+length(prop_cat[[i]])-1)] = tcrossprod(pred[,i],prop_cat[[i]])
+  counter = counter+length(prop_cat[[i]])
+}
+pred_final = floor(pred_final*100000)/100000
+pred_final = as.data.frame(pred_final)
+names(pred_final) = rapply(names_cat, function(x) x)
+pred_final = pred_final[,order(names(pred_final))]
+pred_final = cbind(Id = as.integer(crimes_test$Id), pred_final)
 
-pred_final = pred_final[,c(1,1+order(names(pred_final)[2:40]))]
 head(pred_final)
-
 
 # Write csv ---------------------------------------------------------------
 
