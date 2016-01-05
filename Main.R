@@ -1,3 +1,4 @@
+source('Load_data.R')
 
 # Training data set
 df = crimes
@@ -5,26 +6,26 @@ source("Features.R")
 
 # Include Features ---------------------------------------------------------
 
-data = as.data.frame(cbind(crimes$Category,features)) # CATEGORY
-
+data = as.data.frame(cbind(crimes$Meta_Category,features)) # CATEGORY
+head(data)
 
 # Model Training -----------------------------------------------------------
 
 require(xgboost)
-y=as.numeric(data[,1])-1 # CATEGORY 
+y=as.integer(data[,1])-1 # CATEGORY 
 
 trainMatrix=as.matrix(data[,-1])
 numberOfClasses=max(y)+1
 param <- list("objective" = "multi:softprob",
               "eval_metric" = "mlogloss",
               "num_class" = numberOfClasses)
-cv.nround = 200
+cv.nround = 50
 cv.nfold = 3
 
-bst.cv = xgb.cv(param=param, data = trainMatrix, label = y, 
-                nfold = cv.nfold, nrounds = cv.nround)
+#bst.cv = xgb.cv(param=param, data = trainMatrix, label = y, 
+#                nfold = cv.nfold, nrounds = cv.nround)
 
-nround = 50
+nround = 15
 bst = xgboost(param=param, data = trainMatrix, label = y, nrounds=nround)
 
 

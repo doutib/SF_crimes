@@ -63,7 +63,7 @@ n.cat = length(names_cat)
 
 # Meta-classes ------------------------------------------------------------
 
-library(stringr)
+require(stringr)
   
 Meta_Category = rep("",length(crimes$Category))
 concatenate_cat = function(cat){
@@ -72,27 +72,27 @@ concatenate_cat = function(cat){
 
 # CATEGORY 1
 Meta_Category[str_detect(crimes$Category,concatenate_cat(Cat1)
-)] = "THEFTS"
+)] = "1_THEFTS"
 
 # CATEGORY 2
 Meta_Category[str_detect(crimes$Category,concatenate_cat(Cat2)
-)] = "SOFT"
+)] = "2_SOFT"
 
 # CATEGORY 3
 Meta_Category[str_detect(crimes$Category,concatenate_cat(Cat3)
-)] = "OTHERS"
+)] = "3_OTHERS"
 
 # CATEGORY 4
 Meta_Category[str_detect(crimes$Category,concatenate_cat(Cat4)
-)] = "CRIMINAL ORGANIZATIONS"
+)] = "4_CRIMINAL ORGANIZATIONS"
 
 # CATEGORY 5
 Meta_Category[str_detect(crimes$Category,concatenate_cat(Cat5)
-)] = "ADDICTS"
+)] = "5_ADDICTS"
 
 # CATEGORY 6
 Meta_Category[str_detect(crimes$Category,concatenate_cat(Cat6)
-)] = "THUGS"
+)] = "6_THUGS"
 
 # Add meta-Category
 crimes$Meta_Category=as.factor(Meta_Category)
