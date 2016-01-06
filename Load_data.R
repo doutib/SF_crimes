@@ -2,7 +2,9 @@
 
 crimes0 = read.csv("train.csv")
 crimes_test = read.csv("test.csv")
-District = read.csv("district.csv")
+#District = read.csv("district.csv")
+#papa_sub = read.csv("submissionPAPA.csv")
+
 
 # Remove space outliers ---------------------------------------------------
 

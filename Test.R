@@ -47,9 +47,13 @@ pred_final = pred_final[,order(names(pred_final))]
 pred_final = cbind(Id = as.integer(crimes_test$Id), pred_final)
 
 head(pred_final)
-sum(pred_final[2,])
+head(papa_sub)
+
+ensemble = (papa_sub*3+pred_final)/4
+papa_sub[,2:40] = floor(papa_sub[,2:40]*100000)/100000
+head(papa_sub)
 
 # Write csv ---------------------------------------------------------------
 
-write.csv(pred_final,file = "submission.csv",quote = F,row.names = F)
+write.csv(pred_final,file = "submission_PAPATrunc.csv",quote = F,row.names = F)
 

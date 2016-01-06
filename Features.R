@@ -46,6 +46,15 @@ extract_month = as.numeric(rapply(split_date, function(x) x[2]))
 month = extract_month - min(extract_month)
 
 
+# Season ------------------------------------------------------------------
+
+season = month
+season[which(season == 1 | season == 11 | season == 0 )] = 0
+season[which(season == 2 | season == 3  | season == 4 )] = 1
+season[which(season == 5 | season == 6  | season == 7 )] = 2
+season[which(season == 8 | season == 9  | season == 10)] = 3
+
+
 # Hour --------------------------------------------------------------------
 
 hour = as.numeric(str_extract_all(
@@ -69,33 +78,34 @@ Intersection = (first_street==second_street)*first_street
 
 # District ----------------------------------------------------------------
 
-closest = function(x,y){
-  which.min(apply(y,1,function(r) sum((r-x)^2)))
-}
-library(tcltk)
-district = rep(NA,length(df$X))
-coord = cbind(df$X,df$Y)
-distr = cbind(District$X,District$Y)
-total = length(df$X)
-pb = txtProgressBar(min = 0, max = total, style = 3)
-print('Computing closest district')
-for (i in 1:total){
-  district[i] = closest(coord[i,],distr)
-  setTxtProgressBar(pb, i)
-}
-district = district - 1
+#closest = function(x,y){
+#  which.min(apply(y,1,function(r) sum((r-x)^2)))
+#}
+#library(tcltk)
+#district = rep(NA,length(df$X))
+#coord = cbind(df$X,df$Y)
+#distr = cbind(District$X,District$Y)
+#total = length(df$X)
+#pb = txtProgressBar(min = 0, max = total, style = 3)
+#print('Computing closest district')
+#for (i in 1:total){
+#  district[i] = closest(coord[i,],distr)
+#  setTxtProgressBar(pb, i)
+#}
+#district = district - 1
 
 
 
 # Load features -----------------------------------------------------------
 
 features = data.frame(
-  district = district,
+  #district = district,
+  season = season,
   Intersection = Intersection,
   GridL_Year = GridL_Year,
   day_month = day_month,
   gridL = gridL,
-  #day_week = day_week,
+  day_week = day_week,
   hour = hour, 
   year = year, 
   #month = month,
