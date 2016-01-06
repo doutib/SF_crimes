@@ -10,19 +10,19 @@ source("Features.R")
 
 data_test = features
 
+# Save workspace ----------------------------------------------------------
+
+save.image("workspace.RData")
+
+
 # Model Testing  -----------------------------------------------------------
 
 require(xgboost)
 xgb.pred = predict(bst,as.matrix(data_test))
 pred = matrix(xgb.pred,ncol = n.cat,byrow = T) # CATEGORY
 
-summary(xgb.pred)
 head(pred)
-head(data_test)
-head(pred)
-dim(pred)
-head(y)
-head(as.numeric(crimes$Category))
+
 # Scale --------------------------------------------------------------------
 
 options(scipen=10)
