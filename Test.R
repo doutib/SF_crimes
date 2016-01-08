@@ -48,12 +48,14 @@ pred_final = cbind(Id = as.integer(crimes_test$Id), pred_final)
 
 head(pred_final)
 head(papa_sub)
-
-ensemble = (papa_sub*3+pred_final)/4
-papa_sub[,2:40] = floor(papa_sub[,2:40]*100000)/100000
-head(papa_sub)
+ensemble = pred_final
+ensemble[,2:40] = sqrt(pred_final[,2:40]*papa_sub[,2:40])
+ensemble[,2:40] = floor(ensemble[,2:40]*100000)/100000
+head(ensemble)
+sum(ensemble[2,])
+ensemble[200001,]
 
 # Write csv ---------------------------------------------------------------
 
-write.csv(pred_final,file = "submission_PAPATrunc.csv",quote = F,row.names = F)
+write.csv(ensemble,file = "submission_ensemblePAPA_geom.csv",quote = F,row.names = F)
 
