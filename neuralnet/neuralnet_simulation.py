@@ -1,14 +1,14 @@
 
 # coding: utf-8
 
-# In[6]:
+# In[33]:
 
 from neuralnet_function import *
 from multiprocessing import Pool, TimeoutError
 from multiprocessing import cpu_count
 
 
-# In[7]:
+# In[34]:
 
 ## # Collect data
 df = pd.DataFrame.from_csv("data/data_train.csv", index_col = None)
@@ -17,7 +17,7 @@ X = df.drop(['Category'], axis = 1)
 Y = df[['Category']]
 
 
-# In[10]:
+# In[35]:
 
 # Import set of global parameters from parameters.csv
 parameters_filename = "data/parameters.csv"
@@ -49,30 +49,27 @@ def processInput(index):
     return result
 
 
-# In[ ]:
+# In[19]:
 
 ## Parallelization parameters
 num_cpu = cpu_count()          # Number of clusters
-pool = Pool(processes=num_cpu) # Nb of processes
 max_t =  10*60                 # Max time to wait for each process
 
 
-# In[12]:
+# In[44]:
 
-## # Store result into csv
-with open('data/results.csv', 'wb') as f:
-    writer = csv.writer(f)
-    for index in indexes:
-        print "Start job %s..." % index
-        try:
-            res = pool.apply_async(processInput, [index])      # runs in *only* one process
-            writer.writerows(res.get(timeout=max_t))
-            print "Job %s done." % index
-        except TimeoutError:
-            print "We lacked patience and got a multiprocessing.TimeoutError"
+print 'Starting clusters...'
+pool = Pool(processes=num_cpu)                 # Start clusters
+print 'Starting process...'
+results = pool.map(processInput, indexes)      
 
 
 # In[ ]:
 
-
+print 'Starting writing...'
+## # Store result into csv
+with open('data/results.csv', 'wb') as f:
+    writer = csv.writer(f)
+    for res in results:
+        writer.writerows(res)
 
