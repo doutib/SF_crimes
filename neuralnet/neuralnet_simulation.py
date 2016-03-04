@@ -20,11 +20,15 @@ Y = df[['Category']]
 # In[35]:
 
 # Import set of global parameters from parameters.csv
-parameters_filename = "data/parameters.csv"
+parameters_filename = "data/neuralnet_parameters.csv"
 
 # Import parameters
 df_parameters = pd.DataFrame.from_csv(parameters_filename, index_col = None)
 indexes = np.arange(df_parameters.shape[0]+1) 
+
+# Open file
+f = open('data/neuralnet_results.csv', 'wb')
+writer = csv.writer(f)
 
 
 # In[11]:
@@ -46,7 +50,7 @@ def processInput(index):
                              learning_rate,
                              n_iter,
                              random_state)
-    return result
+    writer.writerows(result)
 
 
 # In[19]:
@@ -61,15 +65,5 @@ max_t =  10*60                 # Max time to wait for each process
 print 'Starting clusters...'
 pool = Pool(processes=num_cpu)                 # Start clusters
 print 'Starting process...'
-results = pool.map(processInput, indexes)      
-
-
-# In[ ]:
-
-print 'Starting writing...'
-## # Store result into csv
-with open('data/results.csv', 'wb') as f:
-    writer = csv.writer(f)
-    for res in results:
-        writer.writerows(res)
+pool.map(processInput, indexes)      
 

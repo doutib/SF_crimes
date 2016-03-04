@@ -1,14 +1,14 @@
 
 # coding: utf-8
 
-# In[7]:
+# In[1]:
 
 import numpy as np
 import itertools
 import csv
 
 
-# In[8]:
+# In[2]:
 
 ## # Parameters
 prop_train    = np.array([0.50])
@@ -42,11 +42,16 @@ parameters = np.array([prop_train,
                        random_state])
 
 
-# In[9]:
+# In[3]:
 
 ## # Export csv of parameters combinations
-with open('data/parameters.csv', 'wb') as csvfile:
+with open('data/neuralnet_parameters.csv', 'wb') as csvfile:
     spamwriter = csv.writer(csvfile, delimiter=',')
     for element in itertools.product(*parameters):
         spamwriter.writerow(element)
+
+
+# In[ ]:
+
+
 
