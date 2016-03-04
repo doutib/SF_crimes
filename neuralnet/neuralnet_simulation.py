@@ -58,7 +58,15 @@ with open('data/results.csv', 'wb') as f:
     writer = csv.writer(f)
     for index in indexes:
         try:
-            writer.writerows(res.get(timeout=1))
+            print "Start job %s..." % index
+            res = pool.apply_async(processInput, [index])      # runs in *only* one process
+            writer.writerows(res.get(timeout=max_t))
+            print "Job %s done." % index
         except TimeoutError:
             print "We lacked patience and got a multiprocessing.TimeoutError"
+
+
+# In[ ]:
+
+
 
