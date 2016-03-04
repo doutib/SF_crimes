@@ -1,14 +1,14 @@
 
 # coding: utf-8
 
-# In[18]:
+# In[8]:
 
 from neuralnet_function import *
-from multiprocessing import Pool
+from multiprocessing import Pool, TimeoutError
 from multiprocessing import cpu_count
 
 
-# In[13]:
+# In[2]:
 
 ## # Collect data
 df = pd.DataFrame.from_csv("data/data_train.csv", index_col = None)
@@ -22,7 +22,7 @@ pool = Pool(processes=num_cpu) # Nb of processes
 max_t =  10*60                 # Max time to wait for each process
 
 
-# In[14]:
+# In[3]:
 
 # Import set of global parameters from parameters.csv
 parameters_filename = "data/parameters.csv"
