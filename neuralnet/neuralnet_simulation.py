@@ -71,7 +71,7 @@ print 'Results:\n--------'
 print results
 
 
-# In[61]:
+# In[62]:
 
 # Open file
 with open('data/neuralnet_results.csv', 'wb') as f:
@@ -91,4 +91,9 @@ with open('data/neuralnet_results.csv', 'wb') as f:
                        "random_state",
                        "prop_train"] )
     writer.writerows(results)
+
+
+# In[ ]:
+
+
 
