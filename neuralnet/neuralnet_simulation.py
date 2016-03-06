@@ -50,17 +50,18 @@ def processInput(index):
     return result
 
 
-# In[48]:
+# In[64]:
 
 ## Parallelization parameters
 num_cpu = cpu_count()          # Number of clusters
-print "Number of identified clusters: %s." %num_cpu
+print "Number of identified CPUs: %s." %num_cpu
+num_clusters = min(num_cpu,df_parameters.shape[0])
 
 
 # In[49]:
 
-print 'Start clusters...'
-pool = Pool(processes=num_cpu)                 # Start clusters  
+print 'Start %s clusters.' % num_clusters
+pool = Pool(processes=num_clusters)                 # Start clusters  
 results = pool.map(processInput, indexes) 
 pool.terminate()
 
