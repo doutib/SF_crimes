@@ -9,9 +9,13 @@ from multiprocessing import cpu_count
 import numpy as np
 import itertools
 import csv
+import time
+from datetime import timedelta
 
 
 # In[39]:
+
+start = time.time()
 
 ## # Collect data
 df = pd.DataFrame.from_csv("data/data_train.csv", index_col = None)
@@ -88,7 +92,8 @@ num_clusters = min(num_cpu,len(parameters))
 
 # Start clusters
 print 'Start %s clusters.\n' % num_clusters
-pool = Pool(processes=num_clusters)                   
+print 'Running...'
+pool = Pool(processes=num_clusters)
 results = pool.map(processInput, indexes) 
 pool.terminate()
 
@@ -120,9 +125,11 @@ with open('data/neuralnet_results.csv', 'wb') as f:
     writer.writerows(results)
 
 
-# In[27]:
+# In[8]:
 
-print 'Done.'
+end = time.time()
+elapsed = end - start
+print 'Done.\nElapsed time: %s' %str(timedelta(seconds=elapsed))
 
 
 # In[ ]:
