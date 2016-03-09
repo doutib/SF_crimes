@@ -32,9 +32,9 @@ Y = df[['Category']]
 # Parameters
 prop_train    = np.array([0.50])
 method1       = np.array(["Tanh"])#,"Rectifier","Sigmoid","ExpLin"])
-neurons1      = np.array([1,2])#12,24,39,47])
+neurons1      = np.array([12,24,39,47])
 method2       = np.array(["Tanh"])#,"Rectifier","Sigmoid","ExpLin"])
-neurons2      = np.array([0,])#12,24,39,47])
+neurons2      = np.array([12,24,39,47])
 decay         = np.array([0.0001])
 learning_rate = np.array([0.001])
 n_iter        = np.array([25])
