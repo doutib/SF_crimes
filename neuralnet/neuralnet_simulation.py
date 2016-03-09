@@ -21,7 +21,7 @@ X = df.drop(['Category'], axis = 1)
 Y = df[['Category']]
 
 
-# In[10]:
+# In[12]:
 
 ## # Define set of global parameters
 
@@ -49,8 +49,8 @@ param = np.array([prop_train,
 
 parameters = np.array(list(itertools.product(*param)))
 
-indexes = len(parameters)
-print "Number of sets of parameters: %s.\n" %indexes
+indexes = np.arange(len(parameters))
+print "Number of sets of parameters: %s.\n" %len(parameters)
 
 print 'Parameters:\n-----------'
 parameters
@@ -85,7 +85,7 @@ def processInput(index):
 # Number of clusters
 num_cpu = cpu_count()          
 print "Number of identified CPUs: %s.\n" %num_cpu
-num_clusters = min(num_cpu,df_parameters.shape[0])
+num_clusters = min(num_cpu,len(parameters))
 
 # Start clusters
 print 'Start %s clusters.\n' % num_clusters
