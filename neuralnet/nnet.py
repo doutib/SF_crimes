@@ -138,7 +138,26 @@ def two_layers_nnet(X,
                        prop_train])
     return result
 
-
+def processInput(index): 
+    """
+    Aux function used for two_layers_nnet_simulation only.
+    """
+    # Define parameters names
+    prop_train,method1,neurons1,method2,neurons2,decay,learning_rate,n_iter,random_state=parameters[index]
+    
+    # Run nnet
+    result = two_layers_nnet(X,
+                             Y,
+                             prop_train,
+                             method1,
+                             neurons1,
+                             method2,
+                             neurons2,
+                             decay,
+                             learning_rate,
+                             n_iter,
+                             random_state)
+    return result
 
 def two_layers_nnet_simulation(X,
                                Y,
@@ -185,24 +204,6 @@ def two_layers_nnet_simulation(X,
     
     print 'Parameters:\n-----------'
     print np.array(parameters)
-    
-    def processInput(index): 
-        # Define parameters names
-        prop_train,method1,neurons1,method2,neurons2,decay,learning_rate,n_iter,random_state=parameters[index]
-        
-        # Run nnet
-        result = two_layers_nnet(X,
-                                 Y,
-                                 prop_train,
-                                 method1,
-                                 neurons1,
-                                 method2,
-                                 neurons2,
-                                 decay,
-                                 learning_rate,
-                                 n_iter,
-                                 random_state)
-        return result
     
     # Number of clusters
     num_cpu = cpu_count()          

@@ -3,8 +3,7 @@
 
 # In[12]:
 
-from neuralnet_function import two_layers_nnet_simulation
-from neuralnet_function import two_layers_nnet
+from nnet import *
 
 
 # In[13]:
@@ -23,11 +22,11 @@ Y = df[['Category']]
 
 # Parameters
 prop_train    = np.array([0.50])
-method1       = np.array(["Tanh"])#,"Rectifier","Sigmoid","ExpLin"])
+method1       = np.array(["Tanh","Rectifier","Sigmoid","ExpLin"])
 neurons1      = np.array([12,24,39,47])
-method2       = np.array(["Tanh"])#,"Rectifier","Sigmoid","ExpLin"])
+method2       = np.array(["Tanh","Rectifier","Sigmoid","ExpLin"])
 neurons2      = np.array([12,24,39,47])
-decay         = np.array([0.0001])
+decay         = np.array([0.0001,0.001])
 learning_rate = np.array([0.001])
 n_iter        = np.array([25])
 random_state  = np.array([1])
@@ -43,8 +42,7 @@ results = two_layers_nnet_simulation(X,
                                      decay,
                                      learning_rate,
                                      n_iter,
-                                     random_state,
-                                     filename = 'data/neuralnet_results.csv')
+                                     random_state)
 
 
 # In[ ]:
@@ -59,6 +57,7 @@ with open(filename, 'wb') as f:
                        "prec",
                        "recall",
                        "f1",
+                       "prop_train",
                        "method1",
                        "neurons1",
                        "method2",
@@ -66,7 +65,6 @@ with open(filename, 'wb') as f:
                        "decay",
                        "learning_rate",
                        "n_iter",
-                       "random_state",
-                       "prop_train"] )
+                       "random_state"] )
     writer.writerows(results)
 
