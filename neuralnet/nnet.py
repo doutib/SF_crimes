@@ -17,7 +17,6 @@ from multiprocessing import Pool, TimeoutError
 from multiprocessing import cpu_count
 from datetime import timedelta
 
-import matplotlib.pyplot as plt
 import sys
 import csv
 import itertools
