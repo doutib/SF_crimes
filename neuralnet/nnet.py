@@ -161,9 +161,8 @@ def two_layers_nnet_simulation(X,
     
     Result:
     ------
-    No return
-        Will generate in a CSV file the result in two_layers_nnet 
-        for every combination of the parameters.    
+    List of Lists of results from two_layers_nnet.
+        One list corresponds to one set of parameters
     """
     
     print('Lauching Simulation...')
