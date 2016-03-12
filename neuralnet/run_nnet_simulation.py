@@ -1,9 +1,10 @@
 
 # coding: utf-8
 
-# In[4]:
+# In[3]:
 
 from nnet import *
+from random import seed
 
 
 # In[5]:
@@ -15,12 +16,15 @@ df = pd.DataFrame.from_csv("data/data_train.csv", index_col = None)
 X = df.drop(['Category'], axis = 1)
 Y = df[['Category']]
 
+# Seed
+seed(1)
+
 ## # Split data set into train/test
 prop_train=0.5
 msk = np.random.rand(len(X)) < prop_train
-X_train = np.array(X[msk])
+X_train = np.array(X[msk],dtype='float64')
 Y_train = np.array(Y[msk])
-X_test =  np.array(X[~msk])
+X_test =  np.array(X[~msk],dtype='float64')
 Y_test =  np.array(Y[~msk])
 
 
@@ -29,12 +33,11 @@ Y_test =  np.array(Y[~msk])
 ## # Lauch simulation
 
 # Parameters
-prop_train    = np.array([0.50])
-method1       = np.array(["Tanh"])#,"Rectifier","Sigmoid","ExpLin"])
+method1       = np.array(["Tanh","Rectifier","Sigmoid","ExpLin"])
 neurons1      = np.array([12,24,39,47])
-method2       = np.array(["Tanh"])#,"Rectifier","Sigmoid","ExpLin"])
+method2       = np.array(["Tanh","Rectifier","Sigmoid","ExpLin"])
 neurons2      = np.array([12,24,39,47])
-decay         = np.array([0.0001])
+decay         = np.array([0.0001,0.001])
 learning_rate = np.array([0.001])
 n_iter        = np.array([25])
 random_state  = np.array([1])

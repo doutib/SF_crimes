@@ -23,14 +23,6 @@ import itertools
 import time
 
 
-# In[8]:
-
-
-X=np.array([[1,2,3],[1,1,2],[2,0,-1]],dtype='float64')
-scaler = MinMaxScaler()
-scaler.fit_transform(X)
-
-
 # In[2]:
 
 def two_layers_nnet(X_train,
