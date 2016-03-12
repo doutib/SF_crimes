@@ -1,13 +1,13 @@
 
 # coding: utf-8
 
-# In[1]:
+# In[4]:
 
 import numpy as np
 import pandas as pd
 
 from sknn.mlp import Classifier, Layer
-from sklearn.preprocessing import scale
+from sklearn.preprocessing import MinMaxScaler
 from sklearn.metrics import confusion_matrix
 from sklearn.metrics import log_loss
 from sklearn.metrics import precision_score
@@ -21,6 +21,14 @@ import sys
 import csv
 import itertools
 import time
+
+
+# In[8]:
+
+
+X=np.array([[1,2,3],[1,1,2],[2,0,-1]],dtype='float64')
+scaler = MinMaxScaler()
+scaler.fit_transform(X)
 
 
 # In[2]:
@@ -79,8 +87,9 @@ def two_layers_nnet(X_train,
     labels = np.unique(Y_train)
     
     ## # Scale Data
-    X_test = scale(X_test)
-    X_train = scale(X_train)
+    scaler = MinMaxScaler()
+    X_test = scaler.fit_transform(X_test)
+    X_train = scaler.fit_transform(X_train)
     
     # Layers
     if neurons2 == 0 :
@@ -278,8 +287,9 @@ def two_layers_nnet_predict(X_train,
     labels = np.unique(Y_train)
     
     ## # Scale Data
-    X_test = scale(X_test)
-    X_train = scale(X_train)
+    scaler = MinMaxScaler()
+    X_test = scaler.fit_transform(X_test)
+    X_train = scaler.fit_transform(X_train)
 
     ## # Split data set into train/test
     
