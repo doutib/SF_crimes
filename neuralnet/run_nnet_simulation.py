@@ -1,12 +1,12 @@
 
 # coding: utf-8
 
-# In[12]:
+# In[19]:
 
 from nnet import *
 
 
-# In[13]:
+# In[20]:
 
 ## # Collect data
 df = pd.DataFrame.from_csv("data/data_train.csv", index_col = None)
@@ -16,17 +16,17 @@ X = df.drop(['Category'], axis = 1)
 Y = df[['Category']]
 
 
-# In[14]:
+# In[21]:
 
 ## # Lauch simulation
 
 # Parameters
 prop_train    = np.array([0.50])
-method1       = np.array(["Tanh","Rectifier","Sigmoid","ExpLin"])
+method1       = np.array(["Tanh"])#,"Rectifier","Sigmoid","ExpLin"])
 neurons1      = np.array([12,24,39,47])
-method2       = np.array(["Tanh","Rectifier","Sigmoid","ExpLin"])
+method2       = np.array(["Tanh"])#,"Rectifier","Sigmoid","ExpLin"])
 neurons2      = np.array([12,24,39,47])
-decay         = np.array([0.0001,0.001])
+decay         = np.array([0.0001])
 learning_rate = np.array([0.001])
 n_iter        = np.array([25])
 random_state  = np.array([1])
@@ -47,8 +47,6 @@ results = two_layers_nnet_simulation(X,
 
 # In[ ]:
 
-print 'Write into csv...'
-filename = 'data/neuralnet_results.csv'
 ## # Write into csv file
 with open(filename, 'wb') as f:
     writer = csv.writer(f)
@@ -57,7 +55,6 @@ with open(filename, 'wb') as f:
                        "prec",
                        "recall",
                        "f1",
-                       "prop_train",
                        "method1",
                        "neurons1",
                        "method2",
@@ -65,6 +62,7 @@ with open(filename, 'wb') as f:
                        "decay",
                        "learning_rate",
                        "n_iter",
-                       "random_state"] )
+                       "random_state",
+                       "prop_train"] )
     writer.writerows(results)
 

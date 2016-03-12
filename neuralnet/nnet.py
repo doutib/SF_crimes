@@ -139,6 +139,24 @@ def two_layers_nnet(X,
     return result
 
 
+def processInput((X,Y,parameters,index)): 
+    # Define parameters names
+    prop_train,method1,neurons1,method2,neurons2,decay,learning_rate,n_iter,random_state=parameters[index]
+    
+    # Run nnet
+    result = two_layers_nnet(X,
+                             Y,
+                             prop_train,
+                             method1,
+                             neurons1,
+                             method2,
+                             neurons2,
+                             decay,
+                             learning_rate,
+                             n_iter,
+                             random_state)
+    return result
+
 
 def two_layers_nnet_simulation(X,
                                Y,
@@ -186,26 +204,6 @@ def two_layers_nnet_simulation(X,
     print 'Parameters:\n-----------'
     print np.array(parameters)
     
-    def processInput(index): 
-        """
-        Aux function used for two_layers_nnet_simulation only.
-        """
-        # Define parameters names
-        prop_train,method1,neurons1,method2,neurons2,decay,learning_rate,n_iter,random_state=parameters[index]
-        
-        # Run nnet
-        result = two_layers_nnet(X,
-                                 Y,
-                                 prop_train,
-                                 method1,
-                                 neurons1,
-                                 method2,
-                                 neurons2,
-                                 decay,
-                                 learning_rate,
-                                 n_iter,
-                                 random_state)
-        return result
 
     # Number of clusters
     num_cpu = cpu_count()          
@@ -213,12 +211,13 @@ def two_layers_nnet_simulation(X,
     num_clusters = min(num_cpu,len(parameters))
     
     ## # Parallelization
-    
+    tuples_indexes = tuple([(X,Y,parameters,index) for index in indexes])
+
     # Start clusters
     print 'Start %s clusters.\n' % num_clusters
     print 'Running...'
     pool = Pool(processes=num_clusters)
-    results = pool.map(processInput, indexes) 
+    results = pool.map(processInput, tuples_indexes) 
     pool.terminate()
     
     # Results
@@ -227,5 +226,7 @@ def two_layers_nnet_simulation(X,
     end = time.time()
     elapsed = end - start
     print 'End of Simulation.\nElapsed time: %s' %str(timedelta(seconds=elapsed))
+    print 'Write into csv...'
+    
     return results
 
