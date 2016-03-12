@@ -1,12 +1,12 @@
 
 # coding: utf-8
 
-# In[19]:
+# In[4]:
 
 from nnet import *
 
 
-# In[20]:
+# In[5]:
 
 ## # Collect data
 df = pd.DataFrame.from_csv("data/data_train.csv", index_col = None)
@@ -15,8 +15,16 @@ df = pd.DataFrame.from_csv("data/data_train.csv", index_col = None)
 X = df.drop(['Category'], axis = 1)
 Y = df[['Category']]
 
+## # Split data set into train/test
+prop_train=0.5
+msk = np.random.rand(len(X)) < prop_train
+X_train = np.array(X[msk])
+Y_train = np.array(Y[msk])
+X_test =  np.array(X[~msk])
+Y_test =  np.array(Y[~msk])
 
-# In[21]:
+
+# In[6]:
 
 ## # Lauch simulation
 
@@ -32,9 +40,10 @@ n_iter        = np.array([25])
 random_state  = np.array([1])
 
 # Write csv file
-results = two_layers_nnet_simulation(X,
-                                     Y,
-                                     prop_train,
+results = two_layers_nnet_simulation(X_train,
+                                     Y_train,
+                                     X_test,
+                                     Y_test,
                                      method1,
                                      neurons1,
                                      method2,

@@ -1,13 +1,13 @@
 
 # coding: utf-8
 
-# In[34]:
+# In[1]:
 
 import numpy as np
 import pandas as pd
 
 from sknn.mlp import Classifier, Layer
-from sklearn.preprocessing import MinMaxScaler
+from sklearn.preprocessing import scale
 from sklearn.metrics import confusion_matrix
 from sklearn.metrics import log_loss
 from sklearn.metrics import precision_score
@@ -23,11 +23,12 @@ import itertools
 import time
 
 
-# In[35]:
+# In[2]:
 
-def two_layers_nnet(X,
-                    Y,
-                    prop_train=0.5,
+def two_layers_nnet(X_train,
+                    Y_train,
+                    X_test,
+                    Y_test,
                     method1="Tanh",
                     neurons1=5,
                     method2="",
@@ -39,12 +40,14 @@ def two_layers_nnet(X,
     """
     Parameters
     ----------
-    X             : pandas data frame
-        data frame of features
-    Y             : pandas data frame
-        data frame of labels
-    prop_train    : float
-        proportion of the traning set
+    X_train       : pandas data frame
+        data frame of features for the training set
+    Y_train       : pandas data frame
+        data frame of labels for the training set
+    X_test        : pandas data frame
+        data frame of features for the test set
+    Y_test        : pandas data frame
+        data frame of labels for the test set
     method1       : str
         method used for the first layer
     neurons1      : int
@@ -73,19 +76,11 @@ def two_layers_nnet(X,
         parameters : previous parameters in the order previously specified
     """
 
-    labels = np.unique(Y)
+    labels = np.unique(Y_train)
     
     ## # Scale Data
-    scaler = MinMaxScaler()
-    X = pd.DataFrame(scaler.fit_transform(X), columns = X.columns)
-
-    ## # Split data set into train/test
-    np.random.seed(seed=1)
-    msk = np.random.rand(len(X)) < prop_train
-    X_train = np.array(X[msk])
-    Y_train = np.array(Y[msk])
-    X_test =  np.array(X[~msk])
-    Y_test =  np.array(Y[~msk])
+    X_test = scale(X_test)
+    X_train = scale(X_train)
     
     # Layers
     if neurons2 == 0 :
@@ -134,19 +129,23 @@ def two_layers_nnet(X,
                        decay,
                        learning_rate,
                        n_iter,
-                       random_state,
-                       prop_train])
+                       random_state])
     return result
 
 
-def processInput((X,Y,parameters,index)): 
+# In[3]:
+
+
+
+def processInput((X_train,Y_train,X_test,Y_test,parameters,index)): 
     # Define parameters names
-    prop_train,method1,neurons1,method2,neurons2,decay,learning_rate,n_iter,random_state=parameters[index]
+    method1,neurons1,method2,neurons2,decay,learning_rate,n_iter,random_state=parameters[index]
     
     # Run nnet
-    result = two_layers_nnet(X,
-                             Y,
-                             prop_train,
+    result = two_layers_nnet(X_train,
+                             Y_train,
+                             X_test,
+                             Y_test,
                              method1,
                              neurons1,
                              method2,
@@ -158,9 +157,10 @@ def processInput((X,Y,parameters,index)):
     return result
 
 
-def two_layers_nnet_simulation(X,
-                               Y,
-                               prop_train,
+def two_layers_nnet_simulation(X_train,
+                               Y_train,
+                               X_test,
+                               Y_test,
                                method1,
                                neurons1,
                                method2,
@@ -186,8 +186,7 @@ def two_layers_nnet_simulation(X,
     start = time.time()
     
     # Combinations
-    param = np.array([prop_train,
-                      method1,
+    param = np.array([method1,
                       neurons1,
                       method2,
                       neurons2,
@@ -211,7 +210,7 @@ def two_layers_nnet_simulation(X,
     num_clusters = min(num_cpu,len(parameters))
     
     ## # Parallelization
-    tuples_indexes = tuple([(X,Y,parameters,index) for index in indexes])
+    tuples_indexes = tuple([(X_train,Y_train,X_test,Y_test,parameters,index) for index in indexes])
 
     # Start clusters
     print 'Start %s clusters.\n' % num_clusters
@@ -229,4 +228,83 @@ def two_layers_nnet_simulation(X,
     print 'Write into csv...'
     
     return results
+
+
+# In[4]:
+
+def two_layers_nnet_predict(X_train,
+                            Y_train,
+                            X_test,
+                            method1="Tanh",
+                            neurons1=5,
+                            method2="",
+                            neurons2=0,
+                            decay=0.0001,
+                            learning_rate=0.001,
+                            n_iter=25,
+                            random_state=1):
+    """
+    Parameters
+    ----------
+    X_train       : pandas data frame
+        data frame of features for the training set
+    Y_train       : pandas data frame
+        data frame of labels for the training set
+    X_test        : pandas data frame
+        data frame of features for the test set
+    method1       : str
+        method used for the first layer
+    neurons1      : int
+        number of neurons of the first layer
+    method2       : None
+        method used for the first layer
+    neurons2      : int
+        number of neurons of the first layer
+    decay         : float
+        weight decay
+    learning_rate : float
+        learning rate
+    n_iter        : int
+        number of iterations
+    random_state  : int
+        seed for weight initialization
+        
+    Result:
+    -------
+    tuple of numpy arrays
+        (predicted classes, predicted probabilities)
+    """
+
+    labels = np.unique(Y_train)
+    
+    ## # Scale Data
+    X_test = scale(X_test)
+    X_train = scale(X_train)
+
+    ## # Split data set into train/test
+    
+    # Layers
+    if neurons2 == 0 :
+        layers=[Layer(method1, weight_decay = decay, units = neurons1),
+                Layer("Softmax")]
+    else:
+        layers=[Layer(method1, weight_decay = decay, units = neurons1),
+                Layer(method2, weight_decay = decay, units = neurons2),
+                Layer("Softmax")]
+        
+    ## # Run nnet
+    # Define classifier
+    nn = Classifier(layers,
+                    learning_rate=learning_rate,
+                    random_state=random_state,
+                    n_iter=n_iter)
+    # Fit
+    nn.fit(X_train, Y_train)
+    # Predict
+    Y_hat = nn.predict(X_test)
+    Y_probs = nn.predict_proba(X_test)
+    
+    # Summarized results
+    result = (Y_hat,Y_probs)
+    return result
 
