@@ -4,13 +4,15 @@
 # In[3]:
 
 from nnet import *
+from time import gmtime, strftime
 
 
 # In[5]:
 
 ## # Collect data
 df = pd.DataFrame.from_csv("data/data_train.csv", index_col = None)
-filename = "data/results_nnet2.csv"
+date = strftime("%Y/%m/%d_%H:%M:%S")
+filename = "data/results_NNET_"+date+".csv"
 
 # Separate labels from data
 X = df.drop(['Category'], axis = 1)

@@ -1,16 +1,18 @@
 
 # coding: utf-8
 
-# In[5]:
+# In[3]:
 
 from rf import *
+from time import gmtime, strftime
 
 
 # In[6]:
 
 ## # Collect data
 df = pd.DataFrame.from_csv("data/data_train.csv", index_col = None)
-filename = "data/results_rf1.csv"
+date = strftime("%Y/%m/%d_%H:%M:%S")
+filename = "data/results_RF_"+date+".csv"
 
 # Separate labels from data
 X = df.drop(['Category'], axis = 1)
@@ -31,10 +33,10 @@ Y_test =  np.array(Y[~msk])
 ## # Lauch simulation
 
 # Parameters
-n_estimators  = [1,2]
+n_estimators  = [10,20]
 criterion     = ["gini"]
 max_features  = ["auto"]
-max_depth     = [1]
+max_depth     = [2,5]
 
 results = rf_simulation(X_train,
                         Y_train,
