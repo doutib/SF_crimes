@@ -35,9 +35,9 @@ Y_test =  np.array(Y[~msk])
 # Parameters
 C                       = [1.0]
 kernel                  = ['poly'] 
-degree                  = [2,3,4]
+degree                  = [1,2]
 gamma                   = ['auto']
-tol                     = [0.001]
+tol                     = [1]
 decision_function_shape = ['ovr']
 
 results = svm_simulation(X_train,

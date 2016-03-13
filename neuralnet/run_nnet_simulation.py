@@ -34,10 +34,10 @@ Y_test =  np.array(Y[~msk])
 
 # Parameters
 method1       = np.array(["Tanh","Rectifier","Sigmoid","ExpLin"])
-neurons1      = np.array([12,24,39,47])
+neurons1      = np.array([24])#n12,24,39,47])
 method2       = np.array(["Tanh","Rectifier","Sigmoid","ExpLin"])
-neurons2      = np.array([12,24,39,47])
-decay         = np.array([0.0001,0.001])
+neurons2      = np.array([39])#,12,24,39,47])
+decay         = np.array([0.0001])
 learning_rate = np.array([0.001])
 n_iter        = np.array([25])
 random_state  = np.array([1])
