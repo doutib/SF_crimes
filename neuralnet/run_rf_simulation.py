@@ -1,16 +1,16 @@
 
 # coding: utf-8
 
-# In[1]:
+# In[5]:
 
-from svm import *
+from rf import *
 
 
-# In[2]:
+# In[6]:
 
 ## # Collect data
 df = pd.DataFrame.from_csv("data/data_train.csv", index_col = None)
-filename = "data/results_svm1.csv"
+filename = "data/results_rf1.csv"
 
 # Separate labels from data
 X = df.drop(['Category'], axis = 1)
@@ -26,28 +26,24 @@ X_test =  np.array(X[~msk],dtype='float64')
 Y_test =  np.array(Y[~msk])
 
 
-# In[ ]:
+# In[7]:
 
 ## # Lauch simulation
 
 # Parameters
-C                       = [1.0]
-kernel                  = ['poly'] 
-degree                  = [2,3,4]
-gamma                   = ['auto']
-tol                     = [0.001]
-decision_function_shape = ['ovr']
+n_estimators  = [1,2]
+criterion     = ["gini"]
+max_features  = ["auto"]
+max_depth     = [1]
 
-results = svm_simulation(X_train,
-                         Y_train,
-                         X_test,
-                         Y_test,
-                         C,
-                         kernel,
-                         degree,
-                         gamma,
-                         tol,
-                         decision_function_shape)
+results = rf_simulation(X_train,
+                        Y_train,
+                        X_test,
+                        Y_test,
+                        n_estimators,
+                        criterion,   
+                        max_features,
+                        max_depth)
 
 
 # In[ ]:
@@ -64,6 +60,7 @@ with open(filename, 'wb') as f:
                         "kernel",
                         "degree",
                         "gamma",
+                        "probability",
                         "tol",
                         "decision_function_shape"] )
     writer.writerows(results)

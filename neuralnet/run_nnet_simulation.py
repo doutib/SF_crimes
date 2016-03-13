@@ -4,7 +4,6 @@
 # In[3]:
 
 from nnet import *
-from random import seed
 
 
 # In[5]:
@@ -17,11 +16,9 @@ filename = "data/results_nnet2.csv"
 X = df.drop(['Category'], axis = 1)
 Y = df[['Category']]
 
-# Seed
-seed(1)
-
 ## # Split data set into train/test
 prop_train=0.5
+np.random.seed(seed=1)
 msk = np.random.rand(len(X)) < prop_train
 X_train = np.array(X[msk],dtype='float64')
 Y_train = np.array(Y[msk])
@@ -75,7 +72,6 @@ with open(filename, 'wb') as f:
                        "decay",
                        "learning_rate",
                        "n_iter",
-                       "random_state",
-                       "prop_train"] )
+                       "random_state"] )
     writer.writerows(results)
 

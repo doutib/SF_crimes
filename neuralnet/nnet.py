@@ -13,6 +13,7 @@ from sklearn.metrics import log_loss
 from sklearn.metrics import precision_score
 from sklearn.metrics import f1_score
 from sklearn.metrics import recall_score
+from sklearn.metrics import accuracy_score
 from multiprocessing import Pool, TimeoutError
 from multiprocessing import cpu_count
 from datetime import timedelta
@@ -105,7 +106,7 @@ def two_layers_nnet(X_train,
     Y_probs = nn.predict_proba(X_test)
     
     ## # Misclassification error rate
-    miss_err = float(sum(Y_test[:,0]!=Y_hat[:,0]))/float(len(Y_test[:,0]))
+    miss_err = 1-accuracy_score(Y_test, Y_hat)
     ## # Log Loss
     eps = 10^(-15)
     logloss = log_loss(Y_test, Y_probs, eps = eps)
@@ -174,8 +175,6 @@ def two_layers_nnet_simulation(X_train,
     Parameters:
     -----------
     Same parameters as two_layers_nnet, in a list format.
-    filename: str
-        Name of file where the results has to be outputed outputed
     
     Result:
     ------
