@@ -11,6 +11,7 @@ from random import seed
 
 ## # Collect data
 df = pd.DataFrame.from_csv("data/data_train.csv", index_col = None)
+filename = "data/results_nnet2.csv"
 
 # Separate labels from data
 X = df.drop(['Category'], axis = 1)
