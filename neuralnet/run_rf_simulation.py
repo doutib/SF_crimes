@@ -11,7 +11,7 @@ from time import gmtime, strftime
 
 ## # Collect data
 df = pd.DataFrame.from_csv("data/data_train.csv", index_col = None)
-date = strftime("%Y/%m/%d_%H:%M:%S")
+date = strftime("%Y-%m-%d_%H:%M:%S")
 filename = "data/results_RF_"+date+".csv"
 
 # Separate labels from data
