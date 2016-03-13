@@ -1,13 +1,13 @@
 
 # coding: utf-8
 
-# In[3]:
+# In[6]:
 
 from rf import *
 from time import gmtime, strftime
 
 
-# In[6]:
+# In[7]:
 
 ## # Collect data
 df = pd.DataFrame.from_csv("data/data_train.csv", index_col = None)
@@ -28,7 +28,7 @@ X_test =  np.array(X[~msk],dtype='float64')
 Y_test =  np.array(Y[~msk])
 
 
-# In[7]:
+# In[8]:
 
 ## # Lauch simulation
 

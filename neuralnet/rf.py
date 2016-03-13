@@ -1,7 +1,7 @@
 
 # coding: utf-8
 
-# In[12]:
+# In[1]:
 
 import numpy as np
 import pandas as pd
@@ -136,7 +136,7 @@ def rf(X_train,
 
 def processInput((X_train,Y_train,X_test,Y_test,parameters,index)): 
     # Define parameters names
-    n_estimators,criterion,max_features,max_depth,n_jobs=parameters[index]
+    n_estimators,criterion,max_features,max_depth=parameters[index]
     
     # Run rf
     result = rf(X_train,
@@ -147,7 +147,7 @@ def processInput((X_train,Y_train,X_test,Y_test,parameters,index)):
                 criterion,
                 max_features,
                 max_depth,
-                n_jobs)
+                n_jobs=1)
     return result
 
 
@@ -179,8 +179,7 @@ def rf_simulation(X_train,
     param = np.array([n_estimators,
                       criterion,
                       max_features,
-                      max_depth,
-                      n_jobs])
+                      max_depth])
     
     parameters = list(itertools.product(*param))
     
