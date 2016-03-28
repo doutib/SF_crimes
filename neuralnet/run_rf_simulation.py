@@ -12,7 +12,7 @@ from time import gmtime, strftime
 ## # Collect data
 df = pd.DataFrame.from_csv("data/data_train.csv", index_col = None)
 date = strftime("%Y-%m-%d_%H:%M:%S")
-filename = "data/results_RF_"+date+".csv"
+filename = "data/simulations_RF_"+date+".csv"
 
 # Separate labels from data
 X = df.drop(['Category'], axis = 1)
@@ -59,11 +59,9 @@ with open(filename, 'wb') as f:
                         "recall",
                         "f1",
                         "C",
-                        "kernel",
-                        "degree",
-                        "gamma",
-                        "probability",
-                        "tol",
-                        "decision_function_shape"] )
+                        "n_estimators",
+                        "criterion",   
+                        "max_features",
+                        "max_depth"] )
     writer.writerows(results)
 
