@@ -12,7 +12,7 @@ from time import gmtime, strftime
 ## # Collect data
 df = pd.DataFrame.from_csv("data/data_train.csv", index_col = None)
 date = strftime("%Y-%m-%d_%H:%M:%S")
-filename = "data/simulations_NNET_"+date+".csv"
+filename = "data/results_NNET_"+date+".csv"
 
 # Separate labels from data
 X = df.drop(['Category'], axis = 1)
@@ -34,13 +34,13 @@ Y_test =  np.array(Y[~msk])
 
 # Parameters
 method1       = np.array(["Tanh"])#,"Rectifier","Sigmoid","ExpLin"])
-neurons1      = np.array([24,39])#n12,24,39,47])
+neurons1      = np.array([39])
 method2       = np.array(["Tanh"])#,"Rectifier","Sigmoid","ExpLin"])
-neurons2      = np.array([39,47])#,12,24,39,47])
-decay         = np.array([0.0001,0.001])
-learning_rate = np.array([0.001,0.0001])
-n_iter        = np.array([25,50])
-random_state  = np.array([1])
+neurons2      = np.array([47,53,57])
+decay         = np.array([0.001])
+learning_rate = np.array([0.001])
+n_iter        = np.array([50,100,200])
+random_state  = np.array([1,2])
 
 # Write csv file
 results = two_layers_nnet_simulation(X_train,
