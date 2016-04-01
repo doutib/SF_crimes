@@ -39,8 +39,8 @@ method2       = np.array(["Tanh"])#,"Rectifier","Sigmoid","ExpLin"])
 neurons2      = np.array([47,53,57])
 decay         = np.array([0.001])
 learning_rate = np.array([0.001])
-n_iter        = np.array([50,100,200])
-random_state  = np.array([1,2])
+n_iter        = np.array([50,100,150,200])
+random_state  = np.array([1])
 
 # Write csv file
 results = two_layers_nnet_simulation(X_train,
