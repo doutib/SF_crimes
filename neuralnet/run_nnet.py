@@ -32,12 +32,12 @@ X_test = np.array(df_test)
 
 # Parameters
 method1       = "Tanh"
-neurons1      = 1#39
+neurons1      = 39
 method2       = "Tanh"
-neurons2      = 0#53
+neurons2      = 53
 decay         = 0.001
 learning_rate = 0.001
-n_iter        = 1#500
+n_iter        = 500
 random_state  = 1
 
 # Write csv file
