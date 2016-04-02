@@ -28,7 +28,7 @@ X_test =  np.array(X[~msk],dtype='float64')
 Y_test =  np.array(Y[~msk])
 
 
-# In[6]:
+# In[1]:
 
 ## # Lauch simulation
 
@@ -36,10 +36,10 @@ Y_test =  np.array(Y[~msk])
 method1       = np.array(["Tanh"])#,"Rectifier","Sigmoid","ExpLin"])
 neurons1      = np.array([39])
 method2       = np.array(["Tanh"])#,"Rectifier","Sigmoid","ExpLin"])
-neurons2      = np.array([47,53,57])
+neurons2      = np.array([53])
 decay         = np.array([0.001])
 learning_rate = np.array([0.001])
-n_iter        = np.array([50,100,150,200])
+n_iter        = np.array([200,300,500,1000])
 random_state  = np.array([1])
 
 # Write csv file
