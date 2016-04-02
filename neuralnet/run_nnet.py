@@ -55,57 +55,6 @@ y_hat, y_probs = two_layers_nnet_predict(X_train,
 results = y_probs
 
 
-# In[7]:
-
-with open(filename, 'wb') as f:
-    writer = csv.writer(f)
-    writer.writerow( ["Id",
-                      "ARSON",
-                      "ASSAULT",
-                      "BAD CHECKS",
-                      "BRIBERY",
-                      "BURGLARY",
-                      "DISORDERLY CONDUCT",
-                      "DRIVING UNDER THE INFLUENCE",
-                      "DRUG/NARCOTIC",
-                      "DRUNKENNESS",
-                      "EMBEZZLEMENT",
-                      "EXTORTION",
-                      "FAMILY OFFENSES",
-                      "FORGERY/COUNTERFEITING",
-                      "FRAUD,GAMBLING",
-                      "KIDNAPPING",
-                      "LARCENY/THEFT",
-                      "LIQUOR LAWS",
-                      "LOITERING",
-                      "MISSING PERSON",
-                      "NON-CRIMINAL",
-                      "OTHER OFFENSES",
-                      "PORNOGRAPHY/OBSCENE MAT",
-                      "PROSTITUTION",
-                      "RECOVERED VEHICLE",
-                      "ROBBERY",
-                      "RUNAWAY",
-                      "SECONDARY CODES",
-                      "SEX OFFENSES FORCIBLE",
-                      "SEX OFFENSES NON FORCIBLE",
-                      "STOLEN PROPERTY",
-                      "SUICIDE",
-                      "SUSPICIOUS OCC",
-                      "TREA",
-                      "TRESPASS",
-                      "VANDALISM",
-                      "VEHICLE THEFT",
-                      "WARRANTS",
-                      "WEAPON LAWS"] )
-    # Index
-    n = results.shape[0]
-    index = np.ndarray((n,1), buffer=np.arange(n+1),dtype=int)
-    results = np.hstack((index,results))
-    # Results
-    writer.writerows(results)
-
-
 # In[ ]:
 
 labels = ["ARSON",
