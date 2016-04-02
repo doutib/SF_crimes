@@ -1,7 +1,7 @@
 
 # coding: utf-8
 
-# In[3]:
+# In[1]:
 
 from nnet import *
 from time import gmtime, strftime
@@ -12,7 +12,7 @@ from time import gmtime, strftime
 ## # Collect data
 df = pd.DataFrame.from_csv("data/data_train.csv", index_col = None)
 date = strftime("%Y-%m-%d_%H:%M:%S")
-filename = "data/results_NNET_"+date+".csv"
+filename = "data/simulations_NNET_"+date+".csv"
 
 # Separate labels from data
 X = df.drop(['Category'], axis = 1)
@@ -42,7 +42,7 @@ learning_rate = np.array([0.001])
 n_iter        = np.array([200,300,500,1000])
 random_state  = np.array([1])
 
-# Write csv file
+# Compute results
 results = two_layers_nnet_simulation(X_train,
                                      Y_train,
                                      X_test,
@@ -76,4 +76,9 @@ with open(filename, 'wb') as f:
                        "n_iter",
                        "random_state"] )
     writer.writerows(results)
+
+
+# In[ ]:
+
+
 
