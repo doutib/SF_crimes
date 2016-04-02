@@ -70,7 +70,8 @@ labels = ["ARSON",
           "EXTORTION",
           "FAMILY OFFENSES",
           "FORGERY/COUNTERFEITING",
-          "FRAUD,GAMBLING",
+          "FRAUD",
+          "GAMBLING",
           "KIDNAPPING",
           "LARCENY/THEFT",
           "LIQUOR LAWS",
@@ -102,11 +103,6 @@ results.to_csv(path_or_buf=filename,
                header=labels, 
                index=True, 
                index_label="Id")
-
-
-# In[ ]:
-
-
 
 
 # In[ ]:
