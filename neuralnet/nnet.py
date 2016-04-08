@@ -108,8 +108,7 @@ def two_layers_nnet(X_train,
     ## # Misclassification error rate
     miss_err = 1-accuracy_score(Y_test, Y_hat)
     ## # Log Loss
-    eps = 10^(-15)
-    logloss = log_loss(Y_test, Y_probs, eps = eps)
+    logloss = log_loss(Y_test, Y_probs)
     
     ## # Precision
     prec = precision_score(y_true=Y_test, y_pred=Y_hat, labels=labels, average='micro')
